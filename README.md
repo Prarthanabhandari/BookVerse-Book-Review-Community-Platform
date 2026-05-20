@@ -110,3 +110,32 @@ CREATE TABLE comments (
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
+
+git clone [https://github.com/your-username/BookVerse.git](https://github.com/your-username/BookVerse.git)
+cd BookVerse
+
+PORT=5000
+DATABASE_URL=postgresql://username:password@localhost:5432/bookverse
+JWT_SECRET=your_super_complex_random_secret_string
+CORS_ORIGIN=http://localhost:5173
+
+# Navigate to backend context
+cd backend
+
+# Install dependencies
+npm install
+
+# Initialize your PostgreSQL schemas using the scripts provided above
+# Run server with hot-reloading active
+npm run dev
+
+
+
+# Open up a separate shell window and navigate to frontend context
+cd frontend
+
+# Install UI layer components
+npm install
+
+# Fire up Vite dev engine
+npm run dev
