@@ -1,0 +1,190 @@
+/* src/styles/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Roboto+Slab:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap');
+
+/* ══════════════════════════════════════════════════════════
+   DEFAULT THEME  — Classic Brown/Cream (BookVerse Original)
+══════════════════════════════════════════════════════════ */
+:root,
+[data-theme="default"] {
+  --color-base:           #FAF8F5;       /* page background        */
+  --color-surface:        #ede6d8;       /* card / sidebar bg      */
+  --color-surface-2:      #d8cdb8;       /* slightly darker surface*/
+  --color-border:         #c8b898;       /* borders                */
+  --color-primary:        #c8860a;       /* gold accent            */
+  --color-primary-light:  rgba(200,134,10,0.12);
+  --color-primary-dark:   #a06008;
+  --color-secondary:      #e09a12;
+  --color-header-bg:      #1a1208;       /* dark navbar            */
+  --color-header-2:       #2c1f0e;       /* navbar gradient stop   */
+  --color-header-border:  #4a3010;
+  --color-text:           #1a1208;       /* main body text         */
+  --color-text-muted:     #7a6040;       /* secondary text         */
+  --color-text-light:     #a89070;       /* subtle text            */
+  --color-text-inverse:   #e8e0d0;       /* text on dark bg        */
+  --color-btn-text:       #ffffff;
+  --color-success:        #2a8a5a;
+  --color-danger:         #e74c3c;
+  --color-info:           #3D5A80;
+  --color-hero-bg:        linear-gradient(135deg, #1a1208 0%, #3a2710 50%, #2a1c0a 100%);
+  --color-explore-bg:     #2a1f10;
+  --radius-card:          12px;
+  --radius-btn:           6px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RETRO BLUE THEME
+   Base: #BBE0EF  |  Header: #161E54  |  Accent: #F16D34  |  Secondary: #FF986A
+══════════════════════════════════════════════════════════ */
+[data-theme="retro-blue"] {
+  --color-base:           #BBE0EF;
+  --color-surface:        #d6edf7;
+  --color-surface-2:      #c8e5f0;
+  --color-border:         #a0cce0;
+  --color-primary:        #F16D34;
+  --color-primary-light:  rgba(241,109,52,0.12);
+  --color-primary-dark:   #d45520;
+  --color-secondary:      #FF986A;
+  --color-header-bg:      #161E54;
+  --color-header-2:       #1a2460;
+  --color-header-border:  #252e70;
+  --color-text:           #161E54;
+  --color-text-muted:     #3a4a7a;
+  --color-text-light:     #6070aa;
+  --color-text-inverse:   #e8f0f8;
+  --color-btn-text:       #ffffff;
+  --color-success:        #2a8a5a;
+  --color-danger:         #e74c3c;
+  --color-info:           #0f4c81;
+  --color-hero-bg:        linear-gradient(135deg, #161E54 0%, #1e2a6e 50%, #0e1640 100%);
+  --color-explore-bg:     #0e1640;
+  --radius-card:          12px;
+  --radius-btn:           6px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SUNSET WARM THEME
+   Base: #FFF7CD  |  Header: #F57799  |  Accent: #FB9B8F  |  Secondary: #FDC3A1
+══════════════════════════════════════════════════════════ */
+[data-theme="sunset-warm"] {
+  --color-base:           #FFF7CD;
+  --color-surface:        #fff3b8;
+  --color-surface-2:      #ffeea0;
+  --color-border:         #f5d980;
+  --color-primary:        #F57799;
+  --color-primary-light:  rgba(245,119,153,0.12);
+  --color-primary-dark:   #d45580;
+  --color-secondary:      #FDC3A1;
+  --color-header-bg:      #c45070;
+  --color-header-2:       #d46080;
+  --color-header-border:  #e07090;
+  --color-text:           #5a1a2a;
+  --color-text-muted:     #8a4060;
+  --color-text-light:     #b07090;
+  --color-text-inverse:   #fff0f4;
+  --color-btn-text:       #ffffff;
+  --color-success:        #2a8a5a;
+  --color-danger:         #c0392b;
+  --color-info:           #8055aa;
+  --color-hero-bg:        linear-gradient(135deg, #c45070 0%, #e06888 50%, #b03060 100%);
+  --color-explore-bg:     #b03060;
+  --radius-card:          16px;
+  --radius-btn:           24px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   VINTAGE EARTH THEME
+   Base: #F9F8F6  |  Header: #C9B59C  |  Accent: #D9CFC7  |  Text: #3d2b1f
+══════════════════════════════════════════════════════════ */
+[data-theme="vintage-earth"] {
+  --color-base:           #F9F8F6;
+  --color-surface:        #efe8df;
+  --color-surface-2:      #e5dbd0;
+  --color-border:         #D9CFC7;
+  --color-primary:        #8a6a50;
+  --color-primary-light:  rgba(138,106,80,0.12);
+  --color-primary-dark:   #6a4a30;
+  --color-secondary:      #C9B59C;
+  --color-header-bg:      #3d2b1f;
+  --color-header-2:       #4a3428;
+  --color-header-border:  #5a4038;
+  --color-text:           #3d2b1f;
+  --color-text-muted:     #7a6050;
+  --color-text-light:     #a09080;
+  --color-text-inverse:   #f5f0ea;
+  --color-btn-text:       #ffffff;
+  --color-success:        #4a7a3a;
+  --color-danger:         #8a3020;
+  --color-info:           #5a6a7a;
+  --color-hero-bg:        linear-gradient(135deg, #3d2b1f 0%, #5a3d2a 50%, #2e1f14 100%);
+  --color-explore-bg:     #2e1f14;
+  --radius-card:          8px;
+  --radius-btn:           4px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   GLOBAL RESETS & BASE
+══════════════════════════════════════════════════════════ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family:      'Open Sans', sans-serif;
+  background-color: var(--color-base);
+  color:            var(--color-text);
+  transition:       background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ── Smooth theme transitions on key elements ── */
+nav, header, aside, footer, section, article, main,
+.card, button, input, textarea, select, a {
+  transition:
+    background-color 0.35s ease,
+    border-color     0.35s ease,
+    color            0.35s ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+══════════════════════════════════════════════════════════ */
+@keyframes fadeIn  { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes spin    { to   { transform: rotate(360deg); } }
+@keyframes slideUp { from { transform:translateY(40px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+@keyframes pulse   { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.5; transform:scale(1.4); } }
+@keyframes progress{ from{ width:0%; } to{ width:100%; } }
+
+.fade-in  { animation: fadeIn  0.4s ease both; }
+.spin     { animation: spin    1s linear infinite; }
+.slide-up { animation: slideUp 0.3s ease both; }
+
+/* ══════════════════════════════════════════════════════════
+   UTILITY CLASSES MAPPED TO CSS VARIABLES
+══════════════════════════════════════════════════════════ */
+.bg-base       { background-color: var(--color-base) !important; }
+.bg-surface    { background-color: var(--color-surface) !important; }
+.bg-surface-2  { background-color: var(--color-surface-2) !important; }
+.bg-primary    { background-color: var(--color-primary) !important; }
+.bg-header     { background-color: var(--color-header-bg) !important; }
+
+.text-main     { color: var(--color-text) !important; }
+.text-muted    { color: var(--color-text-muted) !important; }
+.text-primary  { color: var(--color-primary) !important; }
+.text-inverse  { color: var(--color-text-inverse) !important; }
+
+.border-theme  { border-color: var(--color-border) !important; }
+.border-primary{ border-color: var(--color-primary) !important; }
+
+/* ── Comment speech bubble used in Explore ── */
+.comment-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--color-text);
+}
+
+/* ── Scrollbar theming ── */
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track  { background: var(--color-base); }
+::-webkit-scrollbar-thumb  { background: var(--color-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }

@@ -1,0 +1,228 @@
+/* ══════════════════════════════════════════════════════════
+   GLOBAL RESETS & BASE
+══════════════════════════════════════════════════════════ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: var(--color-base);
+  color: var(--color-text);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   NAVBAR — override hardcoded inline styles
+══════════════════════════════════════════════════════════ */
+nav {
+  background: linear-gradient(180deg, var(--color-header-bg) 0%, var(--color-header-2) 100%) !important;
+  border-bottom-color: var(--color-header-border) !important;
+}
+nav a, nav button { transition: all 0.2s; }
+
+/* ══════════════════════════════════════════════════════════
+   HERO SECTION
+══════════════════════════════════════════════════════════ */
+section[data-hero],
+.hero-section {
+  background: var(--color-hero-bg) !important;
+}
+
+/* Target the hero by its gradient string */
+section[style*="linear-gradient(135deg,#1a1208"] {
+  background: var(--color-hero-bg) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   STAT CARDS in Hero
+══════════════════════════════════════════════════════════ */
+div[style*="rgba(255,255,255,0.04)"] {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: var(--color-header-border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRIMARY BUTTONS — gold gradient buttons
+══════════════════════════════════════════════════════════ */
+a[style*="linear-gradient(180deg,#e09a12"],
+a[style*="linear-gradient(180deg,#D49A00"],
+button[style*="linear-gradient(180deg,#e09a12"],
+button[style*="linear-gradient(180deg,#D49A00"] {
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-dark) 100%) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE BACKGROUNDS
+══════════════════════════════════════════════════════════ */
+/* About, Contact, Write, Profile, MyReviews pages */
+div[style*="background:\"#f5f0e8\""],
+div[style*="background:#f5f0e8"],
+div[style*="background:#FAF8F5"],
+div[style*="background:#f5f0e8"],
+div[style*="background: #FAF8F5"] {
+  background-color: var(--color-base) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CARDS & WIDGETS
+══════════════════════════════════════════════════════════ */
+/* Explore page sidebar widgets */
+div[style*="background:#ede6d8"],
+div[style*="background: #ede6d8"],
+section[style*="background:#ede6d8"] {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Explore 3-col layout wrapper */
+div[style*="background:#d8cdb8"] {
+  background-color: var(--color-surface-2) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   EXPLORE PAGE DARK BG
+══════════════════════════════════════════════════════════ */
+div[style*="backgroundColor:\"#2a1f10\""],
+div[style*="background-color:#2a1f10"],
+div[style*="backgroundColor:#2a1f10"] {
+  background-color: var(--color-explore-bg) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   TEXT COLORS
+══════════════════════════════════════════════════════════ */
+/* Primary gold text */
+span[style*="color:#c8860a"],
+a[style*="color:#c8860a"],
+div[style*="color:#c8860a"] {
+  color: var(--color-primary) !important;
+}
+
+/* Dark heading text */
+div[style*="color:#1a1208"],
+h1[style*="color:#1a1208"],
+h2[style*="color:#1a1208"],
+h3[style*="color:#1a1208"] {
+  color: var(--color-text) !important;
+}
+
+/* Muted text */
+p[style*="color:#7a6040"],
+div[style*="color:#7a6040"],
+span[style*="color:#7a6040"] {
+  color: var(--color-text-muted) !important;
+}
+
+/* Inverse text (on dark backgrounds) */
+span[style*="color:#e8e0d0"],
+div[style*="color:#e8e0d0"],
+h1[style*="color:#e8e0d0"] {
+  color: var(--color-text-inverse) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FEATURED / ABOUT SECTION BACKGROUNDS
+══════════════════════════════════════════════════════════ */
+section[style*="background:#f5f0e8"],
+section[style*="background:#FAF8F5"],
+section[style*="background:#FDFBF7"],
+section[style*="background:#fff"] {
+  background-color: var(--color-base) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════════ */
+footer[style*="#1a1208"],
+footer {
+  background-color: var(--color-header-bg) !important;
+  border-top-color: var(--color-header-border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LOGIN / SIGNUP FORMS
+══════════════════════════════════════════════════════════ */
+div[style*="background:\"linear-gradient(135deg,#1a1208"],
+div[style*="background:linear-gradient(135deg,#1a1208"] {
+  background: var(--color-hero-bg) !important;
+}
+
+/* Form cards */
+div[style*="background:#ede6d8"][style*="borderRadius:12"],
+div[style*="background:#ede6d8"][style*="border-radius:12"] {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Form inputs */
+input[style*="background:#faf7f2"],
+textarea[style*="background:#faf7f2"],
+select[style*="background:#faf7f2"] {
+  background-color: var(--color-base) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   REVIEW CARDS
+══════════════════════════════════════════════════════════ */
+article[style*="background:#ede6d8"] {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+div[style*="background:#fff"][style*="border:\"1px solid #f0e8d8\""],
+div[style*="background:#fff"][style*="border:\"1px solid #e8dcc8\""] {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ADMIN DASHBOARD
+══════════════════════════════════════════════════════════ */
+/* Admin sidebar */
+aside[style*="#120e0a"],
+aside[style*="#1a1005"] {
+  background-color: var(--color-header-bg) !important;
+  border-right-color: var(--color-header-border) !important;
+}
+
+/* Admin top bar */
+div[style*="background:\"#120e0a\""],
+div[style*="background:#120e0a"] {
+  background-color: var(--color-header-bg) !important;
+}
+
+/* Admin main content */
+div[style*="background:\"#FAF8F5\""][style*="flex:1"],
+div[style*="background:#FAF8F5"][style*="flex:1"] {
+  background-color: var(--color-base) !important;
+}
+
+/* Admin cards */
+div[style*="background:\"#fff\""][style*="borderRadius:12"],
+div[style*="background:#fff"][style*="border:\"1px solid #e8dcc8\""] {
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MY DASHBOARD (MyReviews page)
+══════════════════════════════════════════════════════════ */
+div[style*="background:\"linear-gradient(135deg,#1a1208,#3a2710)\""],
+div[style*="background:linear-gradient(135deg,#1a1208,#3a2710)"] {
+  background: var(--color-hero-bg) !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SMOOTH GLOBAL TRANSITION
+══════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color     0.35s ease,
+    color            0.25s ease;
+}
+
+/* But don't animate transforms/opacity with the transition */
+img, svg, .spin { transition: none !important; }
+.spin { animation: spin 1s linear infinite !important; }
