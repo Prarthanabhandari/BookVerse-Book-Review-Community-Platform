@@ -1,0 +1,31 @@
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env~
+*.env
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.suo
+*.swp
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Local project documentation files (keep out of repository)
+*.docx
+*.pdf
+*.pptx
+*.txt
+
+# Local raw screenshots
+images/drafts/

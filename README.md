@@ -476,27 +476,40 @@ Applied statically via custom properties on `:root` in CSS.
 
 ## 📸 Screenshots
 
-> Add your screenshots to an `/images` folder in the repo root.
+Here is a visual tour of the BookVerse platform showing all key features and roles.
 
-| Page | Screenshot |
-|------|-----------|
-| Home — Hero + Live Stats | ![Home](images/home.png) |
-| Home — Hero + Live Stats | ![Home](images/f.png) |
-| Home — Hero + Live Stats | ![Home](images/y.png) |
-| Home — Hero + Live Stats | ![Home](images/homepage.png) |
-| Home — Hero + Live Stats | ![Home](images/aboutpage.png) |
-| Home — Hero + Live Stats | ![Home](images/about.png) |
-| Explore — 3-Column Layout | ![Explore](images/explorepage.png) |
-| Explore — 3-Column Layout | ![Explore](images/explore.png) |
-| Write — ISBN Fetch + Preview | ![Write](images/write.png) |
-| Write — ISBN Fetch + Preview | ![Write](images/writepage.png) |
-| Contact Detail | ![Detail](images/contactpage.png) |
-| Contact Detail | ![Detail](images/contact.png) |
-| My Reading Legacy | ![Dashboard](images/createac.png) |
-| My Reading Legacy | ![Dashboard](images/userdashboard.png) |
-| My Reading Legacy | ![Dashboard](images/writereview.png) |
-| Admin Dashboard | ![Admin](images/admin.png) |
-| Theme Switcher | ![Theme](images/t.png) |
+### 🏠 Landing & Home Experience
+| Feature / Section | Visual Interface |
+|---|---|
+| **Home Page (Hero & Live Stats)** | ![Home Page](images/home-page.png) |
+| **Featured Community Reviews** | ![Featured Reviews](images/home-featured-reviews.png) |
+| **Onboarding - How It Works** | ![Home Steps](images/home-steps.png) |
+
+### 🔍 Discovery & Feed
+| Feature / Section | Visual Interface |
+|---|---|
+| **Explore Page (3-Column Layout)** | ![Explore Page](images/explore-page.png) |
+| **Best Books Section** | ![Best Books](images/best-books.png) |
+| **In-Depth Review Detail** | ![Review Detail](images/review-detail.png) |
+
+### ✍️ Reader Workspace
+| Feature / Section | Visual Interface |
+|---|---|
+| **Account Creation** | ![Sign Up](images/signup-page.png) |
+| **Review Writer (ISBN Auto-Fetch & Live Preview)** | ![Write Review](images/write-review.png) |
+| **User Dashboard (My Reading Legacy)** | ![User Dashboard](images/user-dashboard.png) |
+
+### 🛡️ Admin Operations
+| Feature / Section | Visual Interface |
+|---|---|
+| **Admin Dashboard (Analytics & Insights)** | ![Admin Dashboard](images/admin-dashboard.png) |
+| **Moderation Table (Approve / Reject / Feature)** | ![Admin Moderation](images/admin-review-moderation.png) |
+| **Member Management** | ![Admin Members](images/admin-members.png) |
+
+### 📚 About Page
+| Feature / Section | Visual Interface |
+|---|---|
+| **Inspiration & Mission** | ![About Inspiration](images/about-inspiration.png) |
 
 ---
 
