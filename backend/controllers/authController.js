@@ -2,8 +2,8 @@ const pool   = require("../config/db");
 const bcrypt = require("bcryptjs");
 const { generateToken } = require("../middlewares/authMiddleware");
 
-const ADMIN_EMAIL    = "prarthanabhandari2003@gmail.com";
-const ADMIN_PASSWORD = "Prv@2003";
+const ADMIN_EMAIL    = process.env.ADMIN_EMAIL || "admin@bookverse.com";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "AdminPass123";
 
 const register = async (req, res) => {
   try {

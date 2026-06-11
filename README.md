@@ -139,115 +139,192 @@ npm install axios react-router-dom lucide-react chart.js react-chartjs-2
 
 ---
 
-## 🚀 How to Run the Project
+## 🚀 Step-by-Step Installation & Execution Guide
+
+Follow these comprehensive steps to set up and run the BookVerse application on your local machine.
+
+### Prerequisites
+Before starting, ensure you have the following installed:
+*   [Node.js](https://nodejs.org/) (v18.x or higher recommended)
+*   [npm](https://www.npmjs.com/) (usually bundled with Node.js)
+*   [PostgreSQL Database](https://www.postgresql.org/) (v15 or higher recommended)
+*   Git command-line utility
+
+---
 
 ### Step 1 — Clone the Repository
+Clone the codebase from GitHub to your local development environment:
 ```bash
 git clone https://github.com/Prarthanabhandari/BookVerse-Book-Review-Community-Platform.git
 cd BookVerse-Book-Review-Community-Platform
 ```
 
-### Step 2 — PostgreSQL Setup
-```bash
-# Open PostgreSQL CLI
-psql -U postgres
+---
 
-# Run these SQL commands inside psql to initialize the schema:
-CREATE DATABASE bookverse;
-\c bookverse
+### Step 2 — PostgreSQL Database Setup
+BookVerse uses a relational PostgreSQL database to store user credentials, book reviews, comments, and contact submissions. 
 
--- 1. USERS TABLE
-CREATE TABLE users (
-  id           SERIAL PRIMARY KEY,
-  name         VARCHAR(100) NOT NULL,
-  email        VARCHAR(100) UNIQUE NOT NULL,
-  password     VARCHAR(255) NOT NULL,
-  avatar       VARCHAR(255) DEFAULT '',
-  bio          TEXT DEFAULT '',
-  review_count INT DEFAULT 0,
-  role         VARCHAR(20) DEFAULT 'user',
-  created_at   TIMESTAMP DEFAULT NOW()
-);
+1. **Launch PostgreSQL CLI** (`psql`) or open a database management tool (like PGAdmin or DBeaver).
+   ```bash
+   psql -U postgres
+   ```
+   *(Enter your PostgreSQL password when prompted)*
 
--- 2. REVIEWS TABLE
-CREATE TABLE reviews (
-  id            SERIAL PRIMARY KEY,
-  title         VARCHAR(255) NOT NULL,
-  author        VARCHAR(255) NOT NULL,
-  reviewer_id   INT REFERENCES users(id) ON DELETE CASCADE,
-  reviewer_name VARCHAR(100) NOT NULL,
-  rating        INT CHECK (rating >= 1 AND rating <= 5),
-  content       TEXT NOT NULL,
-  excerpt       TEXT,
-  category      VARCHAR(100),
-  cover         VARCHAR(255) DEFAULT '',
-  comments      INT DEFAULT 0,
-  likes         INT DEFAULT 0,
-  featured      BOOLEAN DEFAULT false,
-  created_at    TIMESTAMP DEFAULT NOW()
-);
+2. **Run the Database DDL Scripts**:
+   Copy and execute the following SQL commands to initialize the `bookverse` database, create all required tables, and configure structural constraints:
+   ```sql
+   -- Create database
+   CREATE DATABASE bookverse;
+   
+   -- Connect to the newly created database
+   \c bookverse
 
--- 3. CONTACTS TABLE
-CREATE TABLE contacts (
-  id         SERIAL PRIMARY KEY,
-  name       VARCHAR(100) NOT NULL,
-  email      VARCHAR(100) NOT NULL,
-  message    TEXT NOT NULL,
-  read       BOOLEAN DEFAULT false,
-  created_at TIMESTAMP DEFAULT NOW()
-);
+   -- 1. USERS TABLE
+   CREATE TABLE users (
+     id           SERIAL PRIMARY KEY,
+     name         VARCHAR(100) NOT NULL,
+     email        VARCHAR(100) UNIQUE NOT NULL,
+     password     VARCHAR(255) NOT NULL,
+     avatar       VARCHAR(255) DEFAULT '',
+     bio          TEXT DEFAULT '',
+     review_count INT DEFAULT 0,
+     role         VARCHAR(20) DEFAULT 'user',
+     created_at   TIMESTAMP DEFAULT NOW()
+   );
 
--- 4. LIKES TABLE
-CREATE TABLE likes (
-  id         SERIAL PRIMARY KEY,
-  review_id  INT REFERENCES reviews(id) ON DELETE CASCADE,
-  user_id    INT REFERENCES users(id) ON DELETE CASCADE,
-  created_at TIMESTAMP DEFAULT NOW(),
-  CONSTRAINT unique_like UNIQUE (review_id, user_id)
-);
+   -- 2. REVIEWS TABLE
+   CREATE TABLE reviews (
+     id            SERIAL PRIMARY KEY,
+     title         VARCHAR(255) NOT NULL,
+     author        VARCHAR(255) NOT NULL,
+     reviewer_id   INT REFERENCES users(id) ON DELETE CASCADE,
+     reviewer_name VARCHAR(100) NOT NULL,
+     rating        INT CHECK (rating >= 1 AND rating <= 5),
+     content       TEXT NOT NULL,
+     excerpt       TEXT,
+     category      VARCHAR(100),
+     cover         VARCHAR(255) DEFAULT '',
+     comments      INT DEFAULT 0,
+     likes         INT DEFAULT 0,
+     featured      BOOLEAN DEFAULT false,
+     created_at    TIMESTAMP DEFAULT NOW()
+   );
 
--- 5. COMMENTS TABLE
-CREATE TABLE comments (
-  id            SERIAL PRIMARY KEY,
-  review_id     INT REFERENCES reviews(id) ON DELETE CASCADE,
-  user_id       INT REFERENCES users(id) ON DELETE SET NULL,
-  reviewer_name VARCHAR(100) NOT NULL,
-  content       TEXT NOT NULL,
-  created_at    TIMESTAMP DEFAULT NOW()
-);
+   -- 3. CONTACTS TABLE
+   CREATE TABLE contacts (
+     id         SERIAL PRIMARY KEY,
+     name       VARCHAR(100) NOT NULL,
+     email      VARCHAR(100) NOT NULL,
+     message    TEXT NOT NULL,
+     read       BOOLEAN DEFAULT false,
+     created_at TIMESTAMP DEFAULT NOW()
+   );
 
-\q
-```
+   -- 4. LIKES TABLE
+   CREATE TABLE likes (
+     id         SERIAL PRIMARY KEY,
+     review_id  INT REFERENCES reviews(id) ON DELETE CASCADE,
+     user_id    INT REFERENCES users(id) ON DELETE CASCADE,
+     created_at TIMESTAMP DEFAULT NOW(),
+     CONSTRAINT unique_like UNIQUE (review_id, user_id)
+   );
 
-### Step 3 — Backend Setup
-```bash
-cd backend
-npm install
-```
+   -- 5. COMMENTS TABLE
+   CREATE TABLE comments (
+     id            SERIAL PRIMARY KEY,
+     review_id     INT REFERENCES reviews(id) ON DELETE CASCADE,
+     user_id       INT REFERENCES users(id) ON DELETE SET NULL,
+     reviewer_name VARCHAR(100) NOT NULL,
+     content       TEXT NOT NULL,
+     created_at    TIMESTAMP DEFAULT NOW()
+   );
+   
+   -- Exit psql
+   \q
+   ```
 
-Create a `.env` file inside the `backend/` folder:
-```env
-PORT=5000
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=bookverse
-DB_USER=postgres
-DB_PASSWORD=your_postgres_password
-JWT_SECRET=BookVerse_super_secret_key_2024
-FRONTEND_URL=http://localhost:5173
-```
+---
 
-Start the backend server:
-```bash
-node server.js
-```
+### Step 3 — Backend Setup & Configuration
+The Node.js/Express backend handles business logic, security middleware, and database operations.
 
-### Step 4 — Frontend Setup
-```bash
-cd ../frontend
-npm install
-npm run dev
-```
+1. **Navigate to the Backend Folder**:
+   ```bash
+   cd backend
+   ```
+
+2. **Install Server Dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**:
+   Create a file named `.env` in the root of the `backend/` directory:
+   ```bash
+   touch .env # Or create manually in your text editor
+   ```
+   Add the following environment variables to the `.env` file, adjusting the database credentials to match your local PostgreSQL configuration:
+   ```env
+   PORT=5000
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=bookverse
+   DB_USER=postgres
+   DB_PASS=your_postgres_password_here
+   JWT_SECRET=BookVerse_super_secret_key_2024
+   FRONTEND_URL=http://localhost:5173
+   NODE_ENV=development
+   
+   # Secure Admin Account Configuration (Not exposed in code)
+   ADMIN_EMAIL=your_admin_email@example.com
+   ADMIN_PASSWORD=your_secure_admin_password
+   ```
+
+4. **Start the Backend Server**:
+   You can run the server in standard mode or development hot-reload mode:
+   * **Development Mode** (restarts automatically on code changes):
+     ```bash
+     npm run dev # runs: nodemon server.js
+     ```
+   * **Production/Standard Mode**:
+     ```bash
+     node server.js
+     ```
+   * *Expected Console Output*:
+     ```text
+     Server running on port 5000
+     PostgreSQL Connected...
+     ```
+
+---
+
+### Step 4 — Frontend Setup & Configuration
+The React frontend is built on Vite, communicating with the backend API via proxy configurations.
+
+1. **Navigate to the Frontend Folder** (from the project root):
+   ```bash
+   cd ../frontend
+   ```
+
+2. **Install Client-Side Dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the Vite Dev Server**:
+   ```bash
+   npm run dev
+   ```
+   * *Expected Console Output*:
+     ```text
+       VITE v6.x.x  ready in X ms
+
+       ➜  Local:   http://localhost:5173/
+       ➜  Network: use --host to expose
+     ```
+
+4. **Access the Application**:
+   Open your browser and navigate to `http://localhost:5173/` to explore the BookVerse platform!
 
 ---
 
@@ -345,14 +422,18 @@ BookVerse/
 
 ---
 
-## 🔐 Admin Credentials
+## 🔐 Admin Credentials & Configuration
 
-```
-Email    →  prarthanabhandari2003@gmail.com
-Password →  Prv@2003
-```
+To keep system security robust, admin credentials are not hardcoded or publicly committed to version control. Instead, they are dynamically loaded from environment variables in your backend configuration.
 
-The backend auto-assigns `role: "admin"` for these credentials. After login the navbar shows **ADMIN DASHBOARD**.
+To configure your admin user locally:
+1. Open your `backend/.env` file.
+2. Add your preferred admin credentials:
+   ```env
+   ADMIN_EMAIL=your_admin_email@example.com
+   ADMIN_PASSWORD=your_secure_admin_password
+   ```
+3. Register this user on the platform. The server automatically flags this email as `role: "admin"` upon registration. If the user already exists, the server updates their role to `admin` on the next login, granting them access to the **ADMIN DASHBOARD** navbar tab and all moderating capabilities.
 
 ---
 
@@ -454,6 +535,11 @@ ADMIN       + Admin Dashboard (/admin/dashboard)
             + Manage all users
             + Read contact messages
 ```
+
+### 🔄 Authentication & Dashboard Navigation Flow
+*   **User Registration & Login**: Users can create a free account or log in through the `/signup` and `/login` routes. Upon successful registration or authentication, they are redirected to the **Home Page**.
+*   **Personalized Dashboard Access**: Once authenticated, the navigation bar dynamically updates to expose the **My Dashboard** option, directing users to `/my-reviews`. In this workspace, users manage their own reading reviews, edit draft submissions, and view aggregated personal metrics.
+*   **Admin Dashboard Redirection**: When users possessing the admin role log in, the navigation bar dynamically highlights the **Admin Dashboard** option, pointing them to `/admin/dashboard` to manage community users, moderate comments, and toggle review feature statuses.
 
 ---
 
