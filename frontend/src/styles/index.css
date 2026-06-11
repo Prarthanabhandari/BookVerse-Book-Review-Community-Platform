@@ -1,3 +1,29 @@
+:root {
+  --color-base:           #FAF8F5;       /* page background        */
+  --color-surface:        #ede6d8;       /* card / sidebar bg      */
+  --color-surface-2:      #d8cdb8;       /* slightly darker surface*/
+  --color-border:         #c8b898;       /* borders                */
+  --color-primary:        #c8860a;       /* gold accent            */
+  --color-primary-light:  rgba(200,134,10,0.12);
+  --color-primary-dark:   #a06008;
+  --color-secondary:      #e09a12;
+  --color-header-bg:      #1a1208;       /* dark navbar            */
+  --color-header-2:       #2c1f0e;       /* navbar gradient stop   */
+  --color-header-border:  #4a3010;
+  --color-text:           #1a1208;       /* main body text         */
+  --color-text-muted:     #7a6040;       /* secondary text         */
+  --color-text-light:     #a89070;       /* subtle text            */
+  --color-text-inverse:   #e8e0d0;       /* text on dark bg        */
+  --color-btn-text:       #ffffff;
+  --color-success:        #2a8a5a;
+  --color-danger:         #e74c3c;
+  --color-info:           #3D5A80;
+  --color-hero-bg:        linear-gradient(135deg, #1a1208 0%, #3a2710 50%, #2a1c0a 100%);
+  --color-explore-bg:     #2a1f10;
+  --radius-card:          12px;
+  --radius-btn:           6px;
+}
+
 /* ══════════════════════════════════════════════════════════
    GLOBAL RESETS & BASE
 ══════════════════════════════════════════════════════════ */

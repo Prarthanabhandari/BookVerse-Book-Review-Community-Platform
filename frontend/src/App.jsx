@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Navbar         from "./components/Navbar";
 import Footer         from "./components/Footer";
-import ThemeToggle    from "./components/ThemeToggle";   // ← ADD THIS
+
 import Home           from "./pages/Home";
 import Explore        from "./pages/Explore";
 import Write          from "./pages/Write";
@@ -36,8 +36,6 @@ export default function App() {
   return (
     <div style={{ minHeight:"100vh", display:"flex", flexDirection:"column", background:"var(--color-base)" }}>
 
-      {/* ── Theme switcher — fixed right side, site-wide ── */}
-      <ThemeToggle />
 
       <Navbar />
 
