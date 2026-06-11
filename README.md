@@ -73,6 +73,16 @@ The platform supports **three user roles**:
 - Statically loaded variables on `:root` ensure instant rendering of the Classic Brown theme without flickers.
 - Clean system structure with 4 preset palettes pre-configured in CSS: Classic Brown · Retro Blue · Sunset Warm · Vintage Earth.
 
+### 🏆 Best Books Showcase
+- **Quality Score Calculation**: Weighted PostgreSQL query sorts books dynamically by a quality score combining average rating (weight 40), total review count (weight 30), and total likes (weight 30).
+- **Aggregated Reviews**: Lists best books with an aggregated JSON array containing all detailed reviewer ratings, contents, excerpts, and timestamps.
+- **Dedicated Route**: Available publicly at `/best-books`.
+
+### 💬 Likes & Comments System
+- **One-Click Likes**: Registered users can toggle likes on reviews, instantly updating the database and updating likes count dynamically.
+- **Robust Commenting Section**: Allows both registered members and guests (using a custom display name) to discuss book reviews.
+- **Authorization-Aware Deletion**: Comment owners and platform administrators can delete comments, automatically decrementing comment counters on the review.
+
 ---
 
 ## 🛠️ Technology Stack
@@ -367,7 +377,10 @@ The backend auto-assigns `role: "admin"` for these credentials. After login the 
 | `GET` | `/api/reviews/top-reviewers` | None | Top 5 |
 | `GET` | `/api/reviews/archives` | None | By month/year |
 | `GET` | `/api/reviews/search?q=` | None | Full-text search |
+| `GET` | `/api/reviews/best-books` | None | Get top 20 best books by weighted score |
 | `GET` | `/api/reviews/:id` | None | Single review |
+| `GET` | `/api/reviews/:id/comments` | None | Get comments list for a review |
+| `GET` | `/api/reviews/:id/likes` | None / JWT | Get total likes count and liked status |
 | `POST` | `/api/reviews/contact` | None | Submit message |
 
 ### Reviews — Protected
@@ -378,6 +391,9 @@ The backend auto-assigns `role: "admin"` for these credentials. After login the 
 | `POST` | `/api/reviews` | Optional JWT | Create review |
 | `PUT` | `/api/reviews/:id` | JWT + Owner/Admin | Update |
 | `DELETE` | `/api/reviews/:id` | JWT + Owner/Admin | Delete |
+| `POST` | `/api/reviews/:id/like` | JWT | Toggle like status on a review |
+| `POST` | `/api/reviews/:id/comments` | Optional JWT | Add comment (logged in or guest name) |
+| `DELETE` | `/api/reviews/comments/:commentId` | JWT | Delete comment (owner or admin only) |
 
 ### Admin
 
@@ -460,6 +476,7 @@ Applied statically via custom properties on `:root` in CSS.
 |-------|------|--------|
 | `/` | Home | Public |
 | `/explore` | Explore | Public |
+| `/best-books` | Best Books | Public |
 | `/about` | About | Public |
 | `/contact` | Contact | Public |
 | `/login` | Login | Public |
