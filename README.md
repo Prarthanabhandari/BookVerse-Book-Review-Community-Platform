@@ -1,153 +1,592 @@
-# BookVerse – Book Review & Community Platform
+# 📚 BOOKVERSE — Book Review & Community Platform
 
-**BookVerse** is a modern full-stack web application developed as part of the Masters of Computer Application (MCA) program at **K.B. Joshi Institute of Information Technology, Pune**. It provides a centralized, dynamic digital environment where book enthusiasts can explore literary works, publish comprehensive text reviews, assign 1-5 ratings, and engage through active community discussions.
+<div align="center">
 
-The application replaces scattered, manual review mechanisms with a robust computerized framework designed with role-based access controls and real-time community indicators.
+> *"Every book you read becomes a permanent insight."*
+> *— Inspired by Derek Sivers*
+
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://postgresql.org/)
+[![Express](https://img.shields.io/badge/Express-4.22-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![JWT](https://img.shields.io/badge/JWT-Auth-black?style=flat-square&logo=jsonwebtokens)](https://jwt.io/)
+
+**A full-stack web application where readers discover books, write structured reviews, and build a permanent digital reading legacy.**
+
+[Features](#-features) · [Tech Stack](#-tech-stack) · [Architecture](#-architecture) · [Installation](#-installation) · [API](#-api-reference) · [Database](#-database-schema) · [Screenshots](#-screenshots)
+
+</div>
 
 ---
 
-## 🚀 Key Features
+## 🌟 What is BookVerse?
 
-### 👤 User Module (Guest & Registered Members)
-- **Dynamic Book Exploration:** Browse and filter books across diverse genres and categories from an interactive sidebar.
-- **Live Search Integration:** Real-time search query matching to find books and reviews immediately (e.g., searching for keywords like *Ikigai*).
-- **Smart ISBN Integration:** Programmatic book metadata and cover illustration extraction utilizing the external **Open Library API**.
-- **Comprehensive CRUD Operations:** Registered members can write, edit, and safely delete their own reading logs or book reviews through their personalized dashboard.
-- **Interactive Community Engine:** Share thoughts by liking and commenting on reviews created by other community members.
-- **Best Books Ranking System:** An automated sorting mechanism that handles user metrics, ratings, and total counts to bubble up trending literature.
+BookVerse is a **community-driven book review platform** built with React, Node.js, Express, and PostgreSQL. It replaces scattered, unstructured book notes with a single searchable platform where readers can write detailed reviews, discover books through community opinions, and admins can curate featured content.
 
-### 👑 Admin Module
-- **Protected Administrative Portal:** Secure entry validation restricted to authorized personnel (e.g., `prarthanabhandari2003@gmail.com`).
-- **Platform Analytics Dashboard:** Central visual analytics console displaying real-time platform statistics utilizing **Chart.js** data structures.
-- **Content Moderation Console:** Ability to monitor, toggle home-screen feature parameters, and drop inappropriate reviews or comments from the main tables.
-- **Inbound Message Feed:** Read and address queries submitted via the public contact forms.
+The platform supports **three user roles**:
+
+| Role | Access |
+|------|--------|
+| 🌐 **Guest** | Browse, search, filter, read reviews, submit a review with name only |
+| 👤 **Registered User** | Personal dashboard, edit/delete own reviews, reviewer profile |
+| 🛡️ **Admin** | Full admin dashboard, moderation, feature toggle, user management |
+
+---
+
+## ✨ Features
+
+### 🏠 Home Page
+- Animated live statistics pulled directly from PostgreSQL
+- Featured Community Reviews — admin-curated 2×3 grid
+- Genre filter pills for instant category filtering
+- Each card links to `/review/:id`
+
+### 🔍 Explore Page
+- Vintage three-column layout (Left Sidebar · Main Feed · Right Sidebar)
+- Real-time category filtering via PostgreSQL `WHERE category = $1`
+- Full-text search across title, author, category, and content
+- Clickable Recent 10 Reviews — each linked to `/review/:id`
+- Top 5 Reviewers with gold avatar circles
+- Dynamic Archives grouped by month/year
+
+### ✍️ Write Review
+- **ISBN Auto-Fetch** — enter ISBN → cover loads from Open Library API
+- Live preview card that updates as you type
+- Guest support — submit without an account
+- Star rating with hover highlight
+
+### 👤 My Reading Legacy
+- Personal stats: Total Reviews, Avg Rating, Categories, Latest date
+- Grid of own review cards with Edit and Delete
+- Edit navigates to `/edit/:id` with pre-filled form from PostgreSQL
+
+### 🛡️ Admin Dashboard
+- **Sidebar Navigation** — Dashboard · Reviews · Members · Categories · Messages · Settings
+- **Clickable Stat Cards** — each filters the Book Reviews tab
+- **Guest vs Member Doughnut Chart** — Chart.js
+- **Moderation Table** — Feature, Delete, Reject & Message User
+- **Contact Inbox** — messages with unread badge tracking
+- **User Management** — view and remove members
+
+### 🎨 Theme System
+- Statically loaded variables on `:root` ensure instant rendering of the Classic Brown theme without flickers.
+- Clean system structure with 4 preset palettes pre-configured in CSS: Classic Brown · Retro Blue · Sunset Warm · Vintage Earth.
 
 ---
 
 ## 🛠️ Technology Stack
 
-### Frontend Architecture
-- **Framework:** React.js (v18.2) initialized via **Vite** tooling
-- **Routing Engine:** React Router DOM (v6) for seamless client-side single-page mapping
-- **API Wrapper Client:** Axios for asynchronous HTTP promise handling to backend routes
-- **Design & Interface:** Lucide React for consistent interface icon primitives
-- **Data Visualization:** Chart.js with `react-chartjs-2` canvas wrappers
+```
+Frontend        React 19 (Vite) · React Router v7 · Axios
+                Lucide React · Chart.js · react-chartjs-2
+                CSS Variables (Classic Brown / default style)
 
-### Backend & API Framework
-- **Runtime System:** Node.js
-- **Server Wrapper:** Express.js (v4.18)
-- **Access Control Security:** Stateless JSON Web Tokens (JWT) coupled with `bcryptjs` password cryptographic hashing
-- **Cross-Origin Configuration:** CORS middleware management
+Backend         Node.js · Express.js
+                jsonwebtoken · bcryptjs · cors · dotenv
 
-### Persistent Data Tier
-- **Database Engine:** PostgreSQL (v15.4) relational platform
-- **Driver Wrapper:** `pg` (Node-Postgres) client pool connection wrapper
+Database        PostgreSQL 15 · pg (node-postgres)
 
----
-
-## 📊 Database Schema (PostgreSQL)
-
-The system relies on five interconnected tables built using explicit cascading criteria and domain constraints:
-
-```sql
--- 1. USERS TABLE
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) DEFAULT 'user' CHECK (role IN ('user', 'admin')),
-    avatar VARCHAR(255),
-    bio TEXT,
-    review_count INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- 2. REVIEWS TABLE
-CREATE TABLE reviews (
-    id SERIAL PRIMARY KEY,
-    reviewer_id INT REFERENCES users(id) ON DELETE SET NULL,
-    reviewer_name VARCHAR(100) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    author VARCHAR(255) NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),
-    content TEXT NOT NULL,
-    excerpt TEXT,
-    category VARCHAR(100),
-    cover VARCHAR(255),
-    likes INT DEFAULT 0,
-    comments INT DEFAULT 0,
-    featured BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- 3. CONTACTS TABLE
-CREATE TABLE contacts (
-    id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) ON DELETE SET NULL,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL,
-    message TEXT NOT NULL,
-    read BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
--- 4. LIKES TABLE
-CREATE TABLE likes (
-    id SERIAL PRIMARY KEY,
-    review_id INT NOT NULL REFERENCES reviews(id) ON DELETE CASCADE,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT NOW(),
-    CONSTRAINT unique_like UNIQUE (review_id, user_id)
-);
-
--- 5. COMMENTS TABLE
-CREATE TABLE comments (
-    id SERIAL PRIMARY KEY,
-    review_id INT NOT NULL REFERENCES reviews(id) ON DELETE CASCADE,
-    user_id INT REFERENCES users(id) ON DELETE SET NULL,
-    reviewer_name VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
-);
+External API    Open Library API (ISBN → cover image)
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## 📦 Dependencies
 
-### 1. Clone the Repository
+### Backend Dependencies
+```bash
+cd backend
+npm install express pg bcryptjs jsonwebtoken cors dotenv
+npm install --save-dev nodemon
+```
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `express` | ^4.22.1 | Web server framework |
+| `pg` | ^8.20.0 | PostgreSQL client for Node.js |
+| `bcryptjs` | ^2.4.3 | Password hashing |
+| `jsonwebtoken` | ^9.0.3 | JWT authentication |
+| `cors` | ^2.8.6 | Cross-origin resource sharing |
+| `dotenv` | ^16.6.1 | Environment variable management |
+| `nodemon` | ^3.0.1 | Auto-restart during development |
+
+### Frontend Dependencies
+```bash
+cd frontend
+npm install axios react-router-dom lucide-react chart.js react-chartjs-2
+```
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `react` | ^19.2.4 | Core UI framework (comes with Vite) |
+| `react-dom` | ^19.2.4 | DOM rendering (comes with Vite) |
+| `react-router-dom` | ^7.14.0 | Client-side routing |
+| `axios` | ^1.14.0 | HTTP requests to backend API |
+| `lucide-react` | ^1.7.0 | Icon library |
+| `chart.js` | ^4.5.1 | Doughnut chart in Admin Dashboard |
+| `react-chartjs-2` | ^5.3.1 | React wrapper for Chart.js |
+
+---
+
+## 🚀 How to Run the Project
+
+### Step 1 — Clone the Repository
 ```bash
 git clone https://github.com/Prarthanabhandari/BookVerse-Book-Review-Community-Platform.git
 cd BookVerse-Book-Review-Community-Platform
 ```
 
-### 2. Configure Environment Variables
-Create a `.env` file inside the `backend` directory:
+### Step 2 — PostgreSQL Setup
+```bash
+# Open PostgreSQL CLI
+psql -U postgres
+
+# Run these SQL commands inside psql to initialize the schema:
+CREATE DATABASE bookverse;
+\c bookverse
+
+-- 1. USERS TABLE
+CREATE TABLE users (
+  id           SERIAL PRIMARY KEY,
+  name         VARCHAR(100) NOT NULL,
+  email        VARCHAR(100) UNIQUE NOT NULL,
+  password     VARCHAR(255) NOT NULL,
+  avatar       VARCHAR(255) DEFAULT '',
+  bio          TEXT DEFAULT '',
+  review_count INT DEFAULT 0,
+  role         VARCHAR(20) DEFAULT 'user',
+  created_at   TIMESTAMP DEFAULT NOW()
+);
+
+-- 2. REVIEWS TABLE
+CREATE TABLE reviews (
+  id            SERIAL PRIMARY KEY,
+  title         VARCHAR(255) NOT NULL,
+  author        VARCHAR(255) NOT NULL,
+  reviewer_id   INT REFERENCES users(id) ON DELETE CASCADE,
+  reviewer_name VARCHAR(100) NOT NULL,
+  rating        INT CHECK (rating >= 1 AND rating <= 5),
+  content       TEXT NOT NULL,
+  excerpt       TEXT,
+  category      VARCHAR(100),
+  cover         VARCHAR(255) DEFAULT '',
+  comments      INT DEFAULT 0,
+  likes         INT DEFAULT 0,
+  featured      BOOLEAN DEFAULT false,
+  created_at    TIMESTAMP DEFAULT NOW()
+);
+
+-- 3. CONTACTS TABLE
+CREATE TABLE contacts (
+  id         SERIAL PRIMARY KEY,
+  name       VARCHAR(100) NOT NULL,
+  email      VARCHAR(100) NOT NULL,
+  message    TEXT NOT NULL,
+  read       BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 4. LIKES TABLE
+CREATE TABLE likes (
+  id         SERIAL PRIMARY KEY,
+  review_id  INT REFERENCES reviews(id) ON DELETE CASCADE,
+  user_id    INT REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT NOW(),
+  CONSTRAINT unique_like UNIQUE (review_id, user_id)
+);
+
+-- 5. COMMENTS TABLE
+CREATE TABLE comments (
+  id            SERIAL PRIMARY KEY,
+  review_id     INT REFERENCES reviews(id) ON DELETE CASCADE,
+  user_id       INT REFERENCES users(id) ON DELETE SET NULL,
+  reviewer_name VARCHAR(100) NOT NULL,
+  content       TEXT NOT NULL,
+  created_at    TIMESTAMP DEFAULT NOW()
+);
+
+\q
+```
+
+### Step 3 — Backend Setup
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file inside the `backend/` folder:
 ```env
 PORT=5000
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=bookverse
 DB_USER=postgres
-DB_PASS=your_database_password
-JWT_SECRET=your_super_complex_random_secret_string
+DB_PASSWORD=your_postgres_password
+JWT_SECRET=BookVerse_super_secret_key_2024
 FRONTEND_URL=http://localhost:5173
 ```
 
-### 3. Setup the Backend
+Start the backend server:
 ```bash
-cd backend
-npm install
-# Initialize the tables in your PostgreSQL database instance using the SQL script above
-npm run dev
+node server.js
 ```
 
-### 4. Setup the Frontend
+### Step 4 — Frontend Setup
 ```bash
 cd ../frontend
 npm install
 npm run dev
 ```
 
-The application will now be running locally at `http://localhost:5173` with the backend API listening at `http://localhost:5000`.
+---
+
+## 🏗️ Architecture
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                    BROWSER  (React + Vite)                │
+│                    http://localhost:5173                   │
+│                                                            │
+│       Navbar │ Pages (13 routes) │ AuthContext            │
+└───────────────────────┬──────────────────────────────────┘
+                        │  axios  /api/*
+                        │  Vite proxy → localhost:5000
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│                EXPRESS SERVER  (Node.js)                   │
+│                http://localhost:5000                       │
+│                                                            │
+│   /api/auth/*      authRoutes    →  authController         │
+│   /api/reviews/*   reviewRoutes  →  reviewController       │
+│                                                            │
+│   Middlewares: protect · optionalAuth · adminOnly          │
+└───────────────────────┬──────────────────────────────────┘
+                        │  pg Pool
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│                  PostgreSQL 15  Database                   │
+│                                                            │
+│     ┌──────────┐  ┌──────────────┐  ┌──────────────┐     │
+│     │  users   │  │   reviews    │  │   contacts   │     │
+│     └──────────┘  └──────────────┘  └──────────────┘     │
+└──────────────────────────────────────────────────────────┘
+                        ▲
+                        │  ISBN cover fetch
+┌──────────────────────┴───────────────────────────────────┐
+│               Open Library API  (external)                 │
+│       covers.openlibrary.org/b/isbn/{isbn}-L.jpg           │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📁 Project Structure
+
+```
+BookVerse/
+├── backend/
+│   ├── config/
+│   │   └── db.js                  PostgreSQL pool
+│   ├── controllers/
+│   │   ├── authController.js      register · login · getMe
+│   │   └── reviewController.js    CRUD · admin · stats · contacts
+│   ├── middlewares/
+│   │   ├── authMiddleware.js      protect · optionalAuth · adminOnly
+│   │   └── errorMiddleware.js     notFound · errorHandler
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   └── reviewRoutes.js
+│   ├── .env
+│   ├── package.json
+│   └── server.js
+│
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   │   ├── Navbar.jsx
+    │   │   ├── Footer.jsx
+    │   │   ├── BookCard.jsx
+    │   │   └── Sidebar.jsx
+    │   ├── context/
+    │   │   └── AuthContext.jsx
+    │   ├── pages/
+    │   │   ├── Home.jsx
+    │   │   ├── Explore.jsx
+    │   │   ├── Write.jsx
+    │   │   ├── ReviewDetail.jsx    /review/:id
+    │   │   ├── EditReview.jsx      /edit/:id
+    │   │   ├── Login.jsx
+    │   │   ├── Signup.jsx
+    │   │   ├── MyReviews.jsx       /my-reviews
+    │   │   ├── Profile.jsx         /profile/:name
+    │   │   ├── AllReviewers.jsx    /all-reviewers
+    │   │   ├── About.jsx
+    │   │   ├── Contact.jsx
+    │   │   └── AdminDashboard.jsx  /admin/dashboard
+    │   ├── styles/index.css        global CSS + presets
+    │   ├── api.js                  axios · authAPI · reviewsAPI
+    │   ├── mockData.js
+    │   ├── App.jsx
+    │   └── main.jsx
+    ├── vite.config.js              proxy /api → localhost:5000
+    └── package.json
+```
+
+---
+
+## 🔐 Admin Credentials
+
+```
+Email    →  prarthanabhandari2003@gmail.com
+Password →  Prv@2003
+```
+
+The backend auto-assigns `role: "admin"` for these credentials. After login the navbar shows **ADMIN DASHBOARD**.
+
+---
+
+## 📡 API Reference
+
+### Authentication
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `POST` | `/api/auth/register` | None | Register |
+| `POST` | `/api/auth/login` | None | Login → JWT |
+| `GET` | `/api/auth/me` | JWT | Current user |
+
+### Reviews — Public
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `GET` | `/api/reviews` | None | All (paginated + `?category=`) |
+| `GET` | `/api/reviews/stats` | None | Live counts |
+| `GET` | `/api/reviews/featured` | None | Featured reviews |
+| `GET` | `/api/reviews/recent` | None | Last 10 |
+| `GET` | `/api/reviews/top-reviewers` | None | Top 5 |
+| `GET` | `/api/reviews/archives` | None | By month/year |
+| `GET` | `/api/reviews/search?q=` | None | Full-text search |
+| `GET` | `/api/reviews/:id` | None | Single review |
+| `POST` | `/api/reviews/contact` | None | Submit message |
+
+### Reviews — Protected
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `GET` | `/api/reviews/my-reviews` | JWT | Own reviews |
+| `POST` | `/api/reviews` | Optional JWT | Create review |
+| `PUT` | `/api/reviews/:id` | JWT + Owner/Admin | Update |
+| `DELETE` | `/api/reviews/:id` | JWT + Owner/Admin | Delete |
+
+### Admin
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `PUT` | `/api/reviews/:id/feature` | Admin | Toggle featured |
+| `GET` | `/api/reviews/admin/reviews` | Admin | All reviews |
+| `GET` | `/api/reviews/admin/users` | Admin | All users |
+| `DELETE` | `/api/reviews/admin/users/:id` | Admin | Remove user |
+| `GET` | `/api/reviews/admin/contacts` | Admin | All messages |
+| `PUT` | `/api/reviews/admin/contacts/:id/read` | Admin | Mark read |
+
+---
+
+## 🗃️ Database Schema
+
+```
+┌───────────────────────────┐        ┌─────────────────────────────────┐
+│          USERS            │        │            REVIEWS               │
+├───────────────────────────┤        ├─────────────────────────────────┤
+│ PK id           SERIAL    │  1     │ PK id            SERIAL          │
+│    name         VARCHAR   │───────▶│ FK reviewer_id   INT  (NULL ok) │
+│    email        VARCHAR   │  N     │    reviewer_name VARCHAR         │
+│    password     VARCHAR   │        │    title         VARCHAR         │
+│    role         VARCHAR   │        │    author        VARCHAR         │
+│    review_count INT       │        │    rating        INT  (1-5)      │
+│    created_at   TIMESTAMP │        │    content       TEXT            │
+└───────────────────────────┘        │    category      VARCHAR         │
+                                     │    cover         VARCHAR         │
+┌───────────────────────────┐        │    featured      BOOLEAN         │
+│         CONTACTS          │        │    created_at    TIMESTAMP       │
+├───────────────────────────┤        └─────────────────────────────────┘
+│ PK id        SERIAL       │
+│    name      VARCHAR      │   reviewer_id is NULLABLE
+│    email     VARCHAR      │   → allows guest reviews
+│    message   TEXT         │
+│    read      BOOLEAN      │   CONTACTS has no FK
+│    created_at TIMESTAMP   │   → captures guest messages
+└───────────────────────────┘
+```
+
+---
+
+## 🔒 Role-Based Access Control
+
+```
+GUEST       Browse · Read · Search · Filter · Submit (name only)
+               │
+               ▼
+REGISTERED  + Write/Edit/Delete own reviews
+USER        + My Reading Legacy dashboard
+            + Reviewer profile page
+               │
+               ▼
+ADMIN       + Admin Dashboard (/admin/dashboard)
+            + Edit/Delete ANY review
+            + Toggle featured status
+            + Manage all users
+            + Read contact messages
+```
+
+---
+
+## 🎨 Theme System
+
+| Theme | Base | Header | Accent |
+|-------|------|--------|--------|
+| 🟤 Classic Brown | `#FAF8F5` | `#1a1208` | `#c8860a` |
+| 🔵 Retro Blue | `#BBE0EF` | `#161E54` | `#F16D34` |
+| 🌸 Sunset Warm | `#FFF7CD` | `#c45070` | `#F57799` |
+| 🌿 Vintage Earth | `#F9F8F6` | `#3d2b1f` | `#8a6a50` |
+
+Applied statically via custom properties on `:root` in CSS.
+
+---
+
+## 🗺️ Page Routes
+
+| Route | Page | Access |
+|-------|------|--------|
+| `/` | Home | Public |
+| `/explore` | Explore | Public |
+| `/about` | About | Public |
+| `/contact` | Contact | Public |
+| `/login` | Login | Public |
+| `/signup` | Signup | Public |
+| `/write` | Write Review | Public |
+| `/review/:id` | Review Detail | Public |
+| `/profile/:name` | Reviewer Profile | Public |
+| `/all-reviewers` | All Reviewers | Public |
+| `/my-reviews` | My Dashboard | 🔒 User |
+| `/edit/:id` | Edit Review | 🔒 Owner / Admin |
+| `/admin/dashboard` | Admin Dashboard | 🛡️ Admin only |
+
+---
+
+## 📸 Screenshots
+
+> Add your screenshots to an `/images` folder in the repo root.
+
+| Page | Screenshot |
+|------|-----------|
+| Home — Hero + Live Stats | ![Home](images/home.png) |
+| Home — Hero + Live Stats | ![Home](images/f.png) |
+| Home — Hero + Live Stats | ![Home](images/y.png) |
+| Home — Hero + Live Stats | ![Home](images/homepage.png) |
+| Home — Hero + Live Stats | ![Home](images/aboutpage.png) |
+| Home — Hero + Live Stats | ![Home](images/about.png) |
+| Explore — 3-Column Layout | ![Explore](images/explorepage.png) |
+| Explore — 3-Column Layout | ![Explore](images/explore.png) |
+| Write — ISBN Fetch + Preview | ![Write](images/write.png) |
+| Write — ISBN Fetch + Preview | ![Write](images/writepage.png) |
+| Contact Detail | ![Detail](images/contactpage.png) |
+| Contact Detail | ![Detail](images/contact.png) |
+| My Reading Legacy | ![Dashboard](images/createac.png) |
+| My Reading Legacy | ![Dashboard](images/userdashboard.png) |
+| My Reading Legacy | ![Dashboard](images/writereview.png) |
+| Admin Dashboard | ![Admin](images/admin.png) |
+| Theme Switcher | ![Theme](images/t.png) |
+
+---
+
+## 📦 Scripts
+
+```bash
+# ── Backend ──────────────────────────────
+cd backend
+node server.js            # start server
+npx kill-port 5000        # free port if busy
+
+# ── Frontend ─────────────────────────────
+cd frontend
+npm run dev               # dev server → localhost:5173
+npm run build             # production build
+npm run preview           # preview production build
+```
+
+---
+
+## 🧪 Test Results
+
+| Test | Status |
+|------|--------|
+| User Registration | ✅ PASS |
+| JWT Login | ✅ PASS |
+| Admin Hardcode Login | ✅ PASS |
+| Guest Review Submit | ✅ PASS |
+| ISBN Auto-Fetch | ✅ PASS |
+| Category Filter (SQL) | ✅ PASS |
+| Full-Text Search | ✅ PASS |
+| Non-admin blocked from `/admin` | ✅ PASS |
+| Feature Toggle (Home sync) | ✅ PASS |
+| Contact → Admin Inbox | ✅ PASS |
+| Edit/Delete own review | ✅ PASS |
+| Admin delete any review | ✅ PASS |
+| Stat card navigation | ✅ PASS |
+| Theme switcher persistence | ✅ PASS |
+
+---
+
+## 🔮 Future Enhancements
+
+- [ ] AI-based personalised book recommendations
+- [ ] Email notifications (welcome, password reset, featured alert)
+- [ ] Google / Facebook OAuth login
+- [ ] Multi-language support
+- [ ] React Native mobile app
+- [ ] Reading lists (To Read / Reading / Finished)
+- [ ] Advanced filters (rating range, date range)
+- [ ] Social sharing (Twitter, LinkedIn, WhatsApp)
+- [ ] Profile image upload
+- [ ] Review analytics charts on My Dashboard
+
+---
+
+## 📄 Environment Variables
+
+```env
+# backend/.env
+PORT=5000
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=bookverse
+DB_USER=postgres
+DB_PASSWORD=your_password
+JWT_SECRET=your_jwt_secret
+```
+
+---
+
+## 👩💻 Author
+
+**Prarthana Basawraj Bhandari**
+
+| | |
+|--|--|
+| Roll No | 2024MCA42 |
+| Programme | MCA — Final Year Project |
+| Institute | K.B. Joshi Institute of Information Technology, Pune |
+| University | S.N.D.T. Women's University |
+| Guide | Prof. Manali Sapkal |
+| Year | 2025 – 2026 |
+
+---
+
+<div align="center">
+
+Built with ❤️ by **Prarthana Basawraj Bhandari**
+
+⭐ **Star this repo if you found it helpful!**
+
+</div>
