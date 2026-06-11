@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://your-backend-service.onrender.com/api/:path*"
+      "destination": "https://bookverse-backend-dzkl.onrender.com/api/:path*"
     }
   ]
 }
