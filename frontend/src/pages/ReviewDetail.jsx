@@ -171,7 +171,7 @@ export default function ReviewDetail() {
         </Link>
 
         {/* ── Book Header ── */}
-        <div style={{ background:"linear-gradient(135deg,#1a1208,#3a2710)", borderRadius:16, padding:"36px", marginBottom:28, display:"flex", gap:28, alignItems:"flex-start", flexWrap:"wrap" }}>
+        <div style={{ background:"linear-gradient(135deg,#1a1208,#3a2710)", borderRadius:16, padding:"36px", marginBottom:28, display:"flex", gap:28, alignItems:"flex-start", flexWrap:"wrap" }} className="review-detail-header">
           <img
             src={review.cover || FALLBACK}
             alt={review.title}
@@ -217,7 +217,7 @@ export default function ReviewDetail() {
         </div>
 
         {/* ── Full Review Content ── */}
-        <div style={{ background:"#fff", borderRadius:12, padding:"36px", border:"1px solid #e8dcc8", marginBottom:0 }}>
+        <div style={{ background:"#fff", borderRadius:12, padding:"36px", border:"1px solid #e8dcc8", marginBottom:0 }} className="review-detail-content-card">
           <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:"#1a1208", marginBottom:20, paddingBottom:14, borderBottom:"1px solid #f0e8d8" }}>
             Review
           </h2>
@@ -460,7 +460,24 @@ export default function ReviewDetail() {
         )}
 
       </div>
-      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+      <style>{`
+        .review-detail-header {
+          padding: 36px !important;
+        }
+        .review-detail-content-card {
+          padding: 36px !important;
+        }
+        @media (max-width: 576px) {
+          .review-detail-header {
+            padding: 20px 16px !important;
+            gap: 16px !important;
+          }
+          .review-detail-content-card {
+            padding: 20px 16px !important;
+          }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+      `}</style>
     </div>
   );
 }

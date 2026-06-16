@@ -163,9 +163,11 @@ export default function Explore() {
       <div style={{ maxWidth:1060, margin:"20px auto", padding:"0 16px" }}>
         <div style={{ display:"grid", gridTemplateColumns:"220px 1fr 210px", gap:14, background:"#d8cdb8", borderRadius:6, padding:14, boxShadow:"0 4px 24px rgba(0,0,0,0.5)" }} className="explore-grid">
 
-          <LeftSidebar recentReviews={recent} />
+          <div className="explore-left">
+            <LeftSidebar recentReviews={recent} />
+          </div>
 
-          <main>
+          <main className="explore-main">
             {/* Banner */}
             <div style={{ borderRadius:5, overflow:"hidden", marginBottom:14, display:"flex", background:"#c8860a", minHeight:140 }}>
               <div style={{ padding:"22px 24px", flex:1, background:"linear-gradient(135deg,#e09a12 0%,#c8780a 60%,#a06008 100%)" }}>
@@ -266,17 +268,33 @@ export default function Explore() {
             </button>
           </main>
 
-          <RightSidebar
-            reviewers={reviewers}
-            archives={archives}
-            categories={categories}
-            onCategoryClick={handleCategoryClick}
-          />
+          <div className="explore-right">
+            <RightSidebar
+              reviewers={reviewers}
+              archives={archives}
+              categories={categories}
+              onCategoryClick={handleCategoryClick}
+            />
+          </div>
         </div>
       </div>
 
       <style>{`
-        @media(max-width:820px) { .explore-grid { grid-template-columns: 1fr !important; } }
+        @media(max-width:820px) {
+          .explore-grid {
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          .explore-main {
+            order: 1 !important;
+          }
+          .explore-left {
+            order: 2 !important;
+          }
+          .explore-right {
+            order: 3 !important;
+          }
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
     </div>

@@ -684,6 +684,55 @@ JWT_SECRET=your_jwt_secret
 
 ---
 
+## 🌐 Production Deployment Guide (GitHub, Render, Neon & Vercel)
+
+This project is optimized for deployment using Neon (PostgreSQL Database), Render (Backend Web Service), and Vercel (Frontend Static Site). Follow this guide to deploy it:
+
+### 1. Push Your Code to GitHub
+Ensure all your local changes are committed and pushed to your GitHub repository:
+```bash
+git add .
+git commit -m "feat: implement mobile responsiveness fixes"
+git push origin main
+```
+
+### 2. Set Up a Cloud PostgreSQL Database on Neon
+1. Go to [Neon.tech](https://neon.tech/) and sign up.
+2. Create a new database project named `bookverse`.
+3. In the Neon Dashboard, copy the connection string under **Connection Details** (it will look like `postgresql://username:password@ep-host.region.aws.neon.tech/neondb?sslmode=require`).
+4. Execute the SQL schema script provided in [Step 2 — PostgreSQL Database Setup](#step-2--postgresql-database-setup) using Neon's online SQL Editor or any database client to create the database tables.
+
+### 3. Deploy the Backend on Render
+1. Go to [Render.com](https://render.com/) and sign in.
+2. Click **New +** and select **Web Service**.
+3. Link your GitHub repository.
+4. Set the following options:
+   - **Name**: `bookverse-backend`
+   - **Root Directory**: `backend`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `node server.js`
+5. Click **Advanced** and add these Environment Variables:
+   - `DATABASE_URL`: *(Your Neon PostgreSQL connection string)*
+   - `JWT_SECRET`: *(A secure secret key for JWT authentication)*
+   - `NODE_ENV`: `production`
+   - `FRONTEND_URL`: *(Your deployed Vercel frontend URL, e.g. `https://your-bookverse.vercel.app`)*
+6. Click **Create Web Service**. Wait for Render to build and start. Note the live backend URL (e.g. `https://bookverse-backend-dzkl.onrender.com`).
+
+### 4. Deploy the Frontend on Vercel
+Vercel routes frontend API requests using the rewrite rules defined in [vercel.json](file:///c:/Users/Prarthana/Desktop/BookVerse/frontend/vercel.json).
+
+1. Go to [Vercel.com](https://vercel.com/) and import your project repository.
+2. Set the following configuration:
+   - **Root Directory**: `frontend`
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+3. Click **Deploy**. Vercel will automatically apply the reverse proxy rewrite from `vercel.json`, directing all `/api/*` requests to your Render backend web service.
+4. If your backend URL ever changes, update the destination in [frontend/vercel.json](file:///c:/Users/Prarthana/Desktop/BookVerse/frontend/vercel.json) and push your changes.
+
+---
+
 ## 👩💻 Author
 
 **Prarthana Basawraj Bhandari**

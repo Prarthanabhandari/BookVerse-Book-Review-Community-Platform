@@ -18,9 +18,7 @@ export default function Navbar() {
     { to: "/contact", label: "Contact" },
   ];
 
-  const links = user
-    ? [...baseLinks, { to: "/my-reviews", label: "My Dashboard" }]
-    : baseLinks;
+  const links = baseLinks;
 
   const isActive = (to) =>
     to === "/" ? location.pathname === "/" : location.pathname.startsWith(to);
@@ -45,7 +43,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }} className="nav-desktop-links">
           {links.map(({ to, label }) => (
             <Link key={to} to={to} style={{
               padding: "8px 14px",
@@ -64,6 +62,7 @@ export default function Navbar() {
         {user && (
           <Link
             to={user.role === "admin" ? "/admin/dashboard" : "/my-reviews"}
+            className="nav-desktop-dashboard"
             style={{
               padding: "8px 16px",
               color: "#fff",
@@ -80,7 +79,7 @@ export default function Navbar() {
         )}
 
         {/* Auth Section */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }} className="nav-desktop-auth">
           {user ? (
             <>
               <div style={{ position: "relative" }}>
@@ -142,11 +141,11 @@ export default function Navbar() {
               <Link to="/login"  style={authBtnStyle(false)}>Login</Link>
             </div>
           )}
-
-          <button onClick={() => setOpen(!open)} style={mobileBtnStyle} className="mob-btn">
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
         </div>
+
+        <button onClick={() => setOpen(!open)} style={mobileBtnStyle} className="nav-mobile-btn">
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
 
       {/* Mobile Menu */}
@@ -157,15 +156,48 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
-          {user && (
-            <button onClick={() => { logout(); navigate("/"); setOpen(false); }} style={mobileLogoutStyle}>
-              Logout
-            </button>
+          {user ? (
+            <div style={{ borderTop: "1px solid #2a1c0a", marginTop: 12, paddingTop: 12 }}>
+              <div style={{ fontFamily: "'Roboto Slab',serif", fontSize: 14, fontWeight: 700, color: "#c8860a", marginBottom: 4 }}>
+                Logged in as {user.name}
+              </div>
+              <div style={{ fontSize: 11, color: "#7a6040", marginBottom: 12 }}>{user.email}</div>
+              
+              <Link to={user.role === "admin" ? "/admin/dashboard" : "/my-reviews"} onClick={() => setOpen(false)} style={mobileLinkStyle(isActive(user.role === "admin" ? "/admin/dashboard" : "/my-reviews"))}>
+                My Dashboard
+              </Link>
+              <button onClick={() => { logout(); navigate("/"); setOpen(false); }} style={mobileLogoutStyle}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div style={{ borderTop: "1px solid #2a1c0a", marginTop: 12, paddingTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+              <Link to="/login" onClick={() => setOpen(false)} style={authBtnStyle(false)}>Login</Link>
+              <Link to="/signup" onClick={() => setOpen(false)} style={authBtnStyle(true)}>Signup</Link>
+            </div>
           )}
         </div>
       )}
 
-      <style>{`@media(max-width:992px) { .mob-btn { display:block !important; } }`}</style>
+      <style>{`
+        .nav-mobile-btn {
+          display: none !important;
+        }
+        @media(max-width:992px) {
+          .nav-desktop-links {
+            display: none !important;
+          }
+          .nav-desktop-dashboard {
+            display: none !important;
+          }
+          .nav-desktop-auth {
+            display: none !important;
+          }
+          .nav-mobile-btn {
+            display: block !important;
+          }
+        }
+      `}</style>
     </nav>
   );
 }

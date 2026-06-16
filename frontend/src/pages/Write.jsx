@@ -212,7 +212,7 @@ export default function Write() {
               </div>
 
               {/* Title + Author */}
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }} className="write-form-row">
                 <div>
                   <label style={lbl}>Book Title *</label>
                   <input style={inp} value={form.title} onChange={set("title")} required placeholder="The Great Gatsby" />
@@ -224,7 +224,7 @@ export default function Write() {
               </div>
 
               {/* Category + Rating */}
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }} className="write-form-row">
                 <div>
                   <label style={lbl}>Category </label>
                   <select style={inp} value={form.category} onChange={set("category")}>
@@ -401,6 +401,9 @@ export default function Write() {
       <style>{`
         @media(max-width:768px) {
           .write-grid { grid-template-columns: 1fr !important; }
+        }
+        @media(max-width:576px) {
+          .write-form-row { grid-template-columns: 1fr !important; gap: 12px !important; }
         }
         .spin { animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }

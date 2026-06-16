@@ -17,9 +17,9 @@ app.get("/api/health",  (_, res) => res.json({ status: "ok" }));
 app.use(notFound);
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production" || process.env.RENDER) {
   const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`✅ BookVerse API running on http://localhost:${PORT}`));
+  app.listen(PORT, () => console.log(`✅ BookVerse API running on port ${PORT}`));
 }
 
 module.exports = app;

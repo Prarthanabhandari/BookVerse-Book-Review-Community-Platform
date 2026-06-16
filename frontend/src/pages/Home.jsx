@@ -101,7 +101,7 @@ export default function Home() {
           </div>
 
           {/* Live stats */}
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }} className="hero-stats-grid">
             {[
               { icon:<BookOpen size={28} color="#c8860a" />, label:"REVIEWS",    value:stats.reviews, suffix:"+" },
               { icon:<Users size={28} color="#c8860a" />,   label:"MEMBERS",    value:stats.members, suffix:"+" },
@@ -182,7 +182,7 @@ export default function Home() {
 
           {/* ── REAL REVIEW CARDS FROM POSTGRESQL ── */}
           {!loading && displayed.length > 0 && (
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))", gap:24, marginBottom:40 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:24, marginBottom:40 }}>
               {displayed.slice(0,6).map(review => (
                 <div key={review.id} style={{
                   background:"#fff", borderRadius:12, padding:24,
@@ -292,6 +292,7 @@ export default function Home() {
 
       <style>{`
         @media(max-width:768px){ .hero-grid{ grid-template-columns:1fr !important; } }
+        @media(max-width:480px){ .hero-stats-grid{ grid-template-columns:1fr !important; } }
       `}</style>
     </div>
   );

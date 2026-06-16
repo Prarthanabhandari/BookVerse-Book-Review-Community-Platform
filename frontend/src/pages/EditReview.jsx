@@ -86,12 +86,12 @@ export default function EditReview() {
             {error && <div style={{ background:"#fde8e8", border:"1px solid #f5c0c0", borderRadius:6, padding:"10px 14px", marginBottom:20, color:"#8a1a1a", fontSize:13 }}>{error}</div>}
 
             <form onSubmit={handleSubmit}>
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }} className="write-form-row">
                 <div><label style={lbl}>Book Title *</label><input style={inp} value={form.title} onChange={set("title")} required /></div>
                 <div><label style={lbl}>Author *</label><input style={inp} value={form.author} onChange={set("author")} required /></div>
               </div>
 
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }} className="write-form-row">
                 <div>
                   <label style={lbl}>Category *</label>
                   <select style={inp} value={form.category} onChange={set("category")} required>
@@ -165,6 +165,7 @@ export default function EditReview() {
       </div>
       <style>{`
         @media(max-width:768px){ .write-grid{ grid-template-columns:1fr !important; } }
+        @media(max-width:576px){ .write-form-row { grid-template-columns: 1fr !important; gap: 12px !important; } }
         @keyframes spin{ to{ transform:rotate(360deg); } }
       `}</style>
     </div>

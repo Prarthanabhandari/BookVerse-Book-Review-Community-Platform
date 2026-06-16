@@ -309,7 +309,7 @@ export default function BestBooks() {
           <div key={`${book.book_title}-${i}`} style={{ background:"#fff", borderRadius:12, border:"1px solid #e8dcc8", marginBottom:20, overflow:"hidden", boxShadow:"0 2px 8px rgba(0,0,0,0.07)" }}>
 
             {/* Book header */}
-            <div style={{ display:"flex", gap:16, padding:"20px 24px", alignItems:"flex-start" }}>
+            <div style={{ display:"flex", gap:16, padding:"20px 24px", alignItems:"flex-start" }} className="best-book-row">
 
               {/* Rank */}
               <div style={{ width:48, height:48, borderRadius:"50%", flexShrink:0, background:rankBg(i), color:"#fff", fontFamily:"'Roboto Slab',serif", fontWeight:900, fontSize:18, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 2px 8px rgba(0,0,0,0.2)" }}>
@@ -332,7 +332,7 @@ export default function BestBooks() {
                 <div style={{ fontSize:14, color:"#c8860a", marginBottom:12 }}>by {book.author_name}</div>
 
                 {/* Stats */}
-                <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:14 }}>
+                <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:14 }} className="best-book-stats">
                   <div style={{ display:"flex", alignItems:"center", gap:5, padding:"4px 12px", background:"#faf0d8", border:"1px solid #f0d890", borderRadius:20 }}>
                     <Star size={12} fill="#c8860a" color="#c8860a"/>
                     <span style={{ fontSize:12, fontWeight:700, color:"#8B4513" }}>{book.avg_rating} avg rating</span>
@@ -383,7 +383,26 @@ export default function BestBooks() {
         ))}
       </div>
 
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media(max-width: 576px) {
+          .best-book-row {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            padding: 16px !important;
+          }
+          .best-book-row img {
+            margin: 10px 0 !important;
+          }
+          .best-book-stats {
+            justify-content: center !important;
+          }
+          .best-book-row button {
+            margin: 0 auto !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

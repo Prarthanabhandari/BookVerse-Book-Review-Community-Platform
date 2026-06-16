@@ -141,7 +141,7 @@ export default function MyReviews() {
 
         {/* ── Reviews Grid ── */}
         {reviews.length > 0 && (
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))", gap:20 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:20 }}>
             {reviews.map(review => (
               <div key={review.id} style={{
                 background:"#fff",

@@ -4,7 +4,7 @@ import {
   LayoutDashboard, BookOpen, Users, Tag, Settings,
   Shield, Star, Trash2, CheckCircle, X,
   Loader, Search, LogOut, Bell, Edit,
-  ThumbsUp, MessageSquare, TrendingUp
+  ThumbsUp, MessageSquare, TrendingUp, Menu
 } from "lucide-react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -22,6 +22,7 @@ export default function AdminDashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab,   setActiveTab]   = useState("dashboard");
   const [flagFilter,  setFlagFilter]  = useState("all");
   const [reviews,     setReviews]     = useState([]);
@@ -161,8 +162,16 @@ export default function AdminDashboard() {
   return (
     <div style={{ display:"flex", minHeight:"100vh", background:"#1A1612", fontFamily:"'Inter','Open Sans',sans-serif" }}>
 
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="admin-sidebar-backdrop"
+          style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)", zIndex:900, display:"none" }}
+        />
+      )}
+
       {/* SIDEBAR */}
-      <aside style={{ width:260, background:"#120e0a", display:"flex", flexDirection:"column", flexShrink:0, borderRight:"1px solid #2a1c0a", position:"sticky", top:0, height:"100vh", overflow:"hidden" }}>
+      <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`} style={{ width:260, background:"#120e0a", display:"flex", flexDirection:"column", flexShrink:0, borderRight:"1px solid #2a1c0a", position:"sticky", top:0, height:"100vh", overflow:"hidden" }}>
         <div style={{ padding:"24px 20px 18px", borderBottom:"1px solid #2a1c0a" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
             <div style={{ width:42, height:42, borderRadius:10, background:"linear-gradient(135deg,#C99700,#a07800)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
@@ -178,7 +187,7 @@ export default function AdminDashboard() {
         </div>
         <nav style={{ flex:1, padding:"12px 0", overflowY:"auto" }}>
           {navItems.map(({ key, icon, label }) => (
-            <button key={key} onClick={() => setActiveTab(key)} style={{
+            <button key={key} onClick={() => { setActiveTab(key); setSidebarOpen(false); }} style={{
               display:"flex", alignItems:"center", gap:14,
               width:"100%", padding:"13px 24px", border:"none",
               background: activeTab===key ? "rgba(201,151,0,0.12)" : "transparent",
@@ -216,8 +225,17 @@ export default function AdminDashboard() {
 
         {/* Top Bar */}
         <div style={{ background:"#120e0a", borderBottom:"1px solid #2a1c0a", padding:"0 28px", height:58, display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0, position:"sticky", top:0, zIndex:50 }}>
-          <div style={{ fontSize:13, color:"#8a7a60" }}>
-            Logged in as <span style={{ color:"#C99700", fontWeight:700 }}>Admin</span>
+          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="admin-menu-toggle"
+              style={{ background:"none", border:"none", color:"#C99700", cursor:"pointer", display:"none", padding:4 }}
+            >
+              <Menu size={20} />
+            </button>
+            <div style={{ fontSize:13, color:"#8a7a60" }}>
+              Logged in as <span style={{ color:"#C99700", fontWeight:700 }}>Admin</span>
+            </div>
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:14 }}>
             <Link to="/" style={{ fontSize:12, color:"#8a7a60", textDecoration:"none" }}>← View Site</Link>
@@ -249,7 +267,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div style={{ padding:"28px 32px", flex:1, background:"#FAF8F5" }}>
+        <div style={{ padding:"28px 32px", flex:1, background:"#FAF8F5" }} className="admin-content">
           {error && (
             <div style={{ background:"#fde8e8", border:"1px solid #f5c0c0", borderRadius:8, padding:"12px 16px", marginBottom:20, color:"#8a1a1a", fontSize:13 }}>
               {error}
@@ -354,7 +372,7 @@ export default function AdminDashboard() {
 
                   {/* Analytics Row */}
                   <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:20, color:"#1A1612", marginBottom:16, fontWeight:700 }}>Advanced User &amp; Review Analytics</h2>
-                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:28 }}>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:28 }} className="admin-analytics-grid">
                     <div style={{ background:"#fff", borderRadius:12, padding:"22px", border:"1px solid #e8dcc8", boxShadow:"0 1px 4px rgba(0,0,0,0.05)" }}>
                       <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:16, color:"#1A1612", marginBottom:18, fontWeight:700 }}>Guest vs Member Reviews</h3>
                       <div style={{ display:"flex", alignItems:"center", gap:24 }}>
@@ -840,7 +858,39 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } } * { box-sizing: border-box; } body { margin: 0; }`}</style>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        * { box-sizing: border-box; }
+        body { margin: 0; }
+        
+        @media(max-width: 992px) {
+          .admin-sidebar {
+            position: fixed !important;
+            left: -260px !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            z-index: 1000 !important;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          }
+          .admin-sidebar.open {
+            left: 0 !important;
+          }
+          .admin-sidebar-backdrop {
+            display: block !important;
+          }
+          .admin-menu-toggle {
+            display: block !important;
+          }
+          .admin-analytics-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media(max-width: 768px) {
+          .admin-content {
+            padding: 16px 12px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
